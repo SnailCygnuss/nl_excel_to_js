@@ -1,4 +1,5 @@
 import pylightxl as xl
+from datetime import date
 
 # TODO: Make the file usable for all excel files.
 
@@ -71,6 +72,12 @@ def generate_out(file_params):
         f.write("];")
         
 
+def file_edit_date():
+
+    with open("out/updated_date.js", "w") as f:
+        f.write(f"let updated_date = '{date.today()}';")
+
+
 if __name__ == "__main__":
     file_params = [{"file_name": "in/Special issues - call for papers.xlsx",
                     "sheet_name": "Special issues",
@@ -88,3 +95,5 @@ if __name__ == "__main__":
 
     for file_param in file_params:
         generate_out(file_param)
+
+    file_edit_date()
