@@ -54,7 +54,7 @@ def generate_out(file_params):
     header = db.nr(name=table_name)[0]
     link_idx = header.index("Link")
 
-    with open(f"out/{table_name}.js", "w") as f:
+    with open(f"{table_name}.js", "w") as f:
         f.write("var dataSet = [\n")
         for line in db.nr(name=table_name)[1:]:
             f.write("[\n '")
@@ -69,7 +69,7 @@ def generate_out(file_params):
 
 def file_edit_date():
     print("Adding update date")
-    with open("out/updated_date.js", "w") as f:
+    with open("updated_date.js", "w") as f:
         f.write(f"let updated_date = '{date.today()}';")
 
 
