@@ -2,7 +2,6 @@ import pylightxl as xl
 from datetime import date
 import os.path
 
-# TODO: Make the file usable for all excel files.
 
 def generate_out(file_params):
     fn_paper = file_params["file_name"]
@@ -26,7 +25,6 @@ def generate_out(file_params):
         value = db.ws(ws=fn_paper_sheet).index(row=check_row, col=check_col)
     table_start_row = check_row
     table_start_cell = f"A{check_row}"
-    # print(table_start_cell)
 
     # Find end column of table
     check_row = table_start_row
@@ -47,7 +45,6 @@ def generate_out(file_params):
         value = db.ws(ws=fn_paper_sheet).index(row=check_row, col=check_col)
     table_end_row = check_row - 1
     table_end_cell = xl.pylightxl.utility_index2address(table_end_row, table_end_col)
-    # print(table_end_cell)
 
 
     # Define the table data
@@ -71,7 +68,7 @@ def generate_out(file_params):
         
 
 def file_edit_date():
-
+    print("Adding update date")
     with open("out/updated_date.js", "w") as f:
         f.write(f"let updated_date = '{date.today()}';")
 
@@ -95,3 +92,4 @@ if __name__ == "__main__":
         generate_out(file_param)
 
     file_edit_date()
+    print("Completed")
