@@ -1,5 +1,6 @@
 import pylightxl as xl
 from datetime import date
+import os.path
 
 # TODO: Make the file usable for all excel files.
 
@@ -7,6 +8,10 @@ def generate_out(file_params):
     fn_paper = file_params["file_name"]
     fn_paper_sheet = file_params["sheet_name"]
     table_name = file_params["out_name"]
+
+    # Check if file exists, otherwise skip the file for processing
+    if not os.path.isfile(fn_paper):
+        return
 
     print(f"Processing {fn_paper}")
     db = xl.readxl(fn_paper)
