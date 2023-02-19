@@ -1,5 +1,5 @@
 import pylightxl as xl
-from datetime import date
+from datetime import date, datetime
 import os.path
 import re
 
@@ -20,7 +20,6 @@ def check_expiry_date(given_date):
     d = int(matches[0][2])
     received_date = date(y, m, d)
     if received_date<=today:
-        print("False")
         return True
     return False
 
@@ -81,7 +80,6 @@ def generate_out(file_params):
     for date_col_name in date_col_names:
         if date_col_name in header:
             date_idx = header.index(date_col_name)
-    print(date_idx)
 
     with open(f"{table_name}.js", "w") as f:
         f.write("var dataSet = [\n")
@@ -103,8 +101,10 @@ def generate_out(file_params):
 
 def file_edit_date():
     print("Adding update date")
+    date_time = datetime.now()
+    date_time = f"{date_time.year}-{date_time.month}-{date_time.day} {date_time.hour}:{date_time.minute}"
     with open("updated_date.js", "w") as f:
-        f.write(f"let updated_date = '{date.today()}';")
+        f.write(f"let updated_date = '{date_time}'")
 
 
 if __name__ == "__main__":
