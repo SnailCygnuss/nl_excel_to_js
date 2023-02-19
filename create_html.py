@@ -1,6 +1,28 @@
 import pylightxl as xl
 from datetime import date
 import os.path
+import re
+
+
+def check_expiry_date(given_date):
+    """
+    Check if the date in the excel file is past from today or not
+    :param given_date: date from the excel file
+    :return: true or false
+    """
+    if given_date == "Löpande":
+        return False
+    today = date.today()
+    r = re.compile(r"(\d{4})[/-](\d{1,2})[/-](\d{1,2})")
+    matches = r.findall(given_date)
+    y = int(matches[0][0])
+    m = int(matches[0][1])
+    d = int(matches[0][2])
+    received_date = date(y, m, d)
+    if received_date<=today:
+        print("False")
+        return True
+    return False
 
 
 def generate_out(file_params):
@@ -64,6 +86,10 @@ def generate_out(file_params):
     with open(f"{table_name}.js", "w") as f:
         f.write("var dataSet = [\n")
         for line in db.nr(name=table_name)[1:]:
+            # If the date has expired, do not add it to the list 
+            if check_expiry_date(line[date_idx]):
+                continue
+            
             f.write("[\n '")
             f.write("', '".join(x.strip().replace("\n", " ") for x in line[:link_idx]))
             f.write("', '")
@@ -71,6 +97,7 @@ def generate_out(file_params):
             f.write("', '")
             f.write("', '".join(x.strip().replace("\n", " ") for x in line[link_idx+1:]))
             f.write("' ],\n")
+        
         f.write("];")
         
 
