@@ -54,6 +54,13 @@ def generate_out(file_params):
     header = db.nr(name=table_name)[0]
     link_idx = header.index("Link")
 
+    # find index of date in the file
+    date_col_names = ['Dates', 'Closing date', 'Deadline']
+    for date_col_name in date_col_names:
+        if date_col_name in header:
+            date_idx = header.index(date_col_name)
+    print(date_idx)
+
     with open(f"{table_name}.js", "w") as f:
         f.write("var dataSet = [\n")
         for line in db.nr(name=table_name)[1:]:
@@ -87,7 +94,7 @@ if __name__ == "__main__":
                     "sheet_name": "Research calls",
                     "out_name": "research_calls"},
                 ]
-
+    
     for file_param in file_params:
         generate_out(file_param)
 

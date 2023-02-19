@@ -164,3 +164,4 @@ cython_debug/
 *.xlsx
 /out
 /in
+*.js
