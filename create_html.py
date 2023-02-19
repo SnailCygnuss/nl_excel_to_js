@@ -104,7 +104,7 @@ def file_edit_date():
     date_time = datetime.now()
     date_time = f"{date_time.year}-{date_time.month}-{date_time.day} {date_time.hour}:{date_time.minute}"
     with open("updated_date.js", "w") as f:
-        f.write(f"let updated_date = '{date_time}'")
+        f.write(f"let updated_date = '{date_time}';")
 
 
 if __name__ == "__main__":
