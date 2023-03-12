@@ -80,6 +80,7 @@ def generate_out(file_params):
     for date_col_name in date_col_names:
         if date_col_name in header:
             date_idx = header.index(date_col_name)
+            break
 
     with open(f"{table_name}.js", "w") as f:
         f.write("var dataSet = [\n")
