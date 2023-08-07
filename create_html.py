@@ -1,8 +1,20 @@
 import pylightxl as xl
 from datetime import date, datetime
-import os.path
+import os
 import re
+import filecmp
+import shutil
 
+def copy_files(file_params, cloud_path):
+    """
+    Copy modified files from one drive to the current folder for processing
+    """
+    fnames = [x["file_name"] for x in file_params]
+    for fname_dst in fnames:
+        fname_src = cloud_path + "/" + fname_dst
+        if not os.path.exists(fname_dst) or not filecmp.cmp(fname_src, fname_dst, shallow=True):
+            shutil.copyfile(fname_src, fname_dst)
+            print(f"{fname_dst} – file is updated.")
 
 def check_expiry_date(given_date):
     """
@@ -15,6 +27,8 @@ def check_expiry_date(given_date):
     today = date.today()
     r = re.compile(r"(\d{4})[/-](\d{1,2})[/-](\d{1,2})")
     matches = r.findall(given_date)
+    if not matches:
+        raise Exception("Error: Date not in the correct format in the file")
     y = int(matches[0][0])
     m = int(matches[0][1])
     d = int(matches[0][2])
@@ -108,6 +122,11 @@ def file_edit_date():
         f.write(f"let updated_date = '{date_time}';")
 
 
+def copy_files_github():
+    """
+    Copy the files to github folder
+    """
+
 if __name__ == "__main__":
     file_params = [{"file_name": "Special issues - call for papers.xlsx",
                     "sheet_name": "Special issues",
@@ -122,9 +141,16 @@ if __name__ == "__main__":
                     "sheet_name": "Research calls",
                     "out_name": "research_calls"},
                 ]
-    
+    cloud_path = "/Users/sahilah/Library/CloudStorage/OneDrive-Chalmers/Documents - Chalmers.Northern LEAD Shared Folder/Shared/Lists of Research calls, Special issues, Conferences"
+
+    copy_files(file_params, cloud_path)
+
     for file_param in file_params:
         generate_out(file_param)
 
     file_edit_date()
+    print("JSON files updated")
+
+    copy_files_github()
+    print("Copied files to github folder")
     print("Completed")
