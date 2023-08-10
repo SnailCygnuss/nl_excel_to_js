@@ -115,6 +115,9 @@ def generate_out(file_params):
         
 
 def file_edit_date():
+    """
+    Create a file that contains the update time stamp. File name hard coded.
+    """
     print("Adding update date")
     date_time = datetime.now()
     date_time = f"{date_time.year}-{date_time.month:02}-{date_time.day:02} {date_time.hour:02}:{date_time.minute:02}"
@@ -122,10 +125,15 @@ def file_edit_date():
         f.write(f"let updated_date = '{date_time}';")
 
 
-def copy_files_git_folder():
+def copy_files_git_folder(file_params):
     """
     Copy the files to github folder
     """
+    for f in file_params:
+        file_name = f["out_name"] + ".js"
+        shutil.copyfile(file_name, f"../nlead_data_edit/data/{file_name}")
+    shutil.copyfile("updated_date.js", "../nlead_data_edit/data/updated_date.js")
+
 
 if __name__ == "__main__":
     file_params = [{"file_name": "Special issues - call for papers.xlsx",
@@ -151,7 +159,7 @@ if __name__ == "__main__":
     file_edit_date()
     print("JSON files updated")
 
-    copy_files_git_folder()
-    # print("Copied files to github folder")
+    copy_files_git_folder(file_params)
+    print("Copied files to git folder")
     
     print("Completed")
