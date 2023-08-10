@@ -117,12 +117,12 @@ def generate_out(file_params):
 def file_edit_date():
     print("Adding update date")
     date_time = datetime.now()
-    date_time = f"{date_time.year}-{date_time.month}-{date_time.day} {date_time.hour}:{date_time.minute}"
+    date_time = f"{date_time.year}-{date_time.month:02}-{date_time.day:02} {date_time.hour:02}:{date_time.minute:02}"
     with open("updated_date.js", "w") as f:
         f.write(f"let updated_date = '{date_time}';")
 
 
-def copy_files_github():
+def copy_files_git_folder():
     """
     Copy the files to github folder
     """
@@ -151,6 +151,7 @@ if __name__ == "__main__":
     file_edit_date()
     print("JSON files updated")
 
-    copy_files_github()
-    print("Copied files to github folder")
+    copy_files_git_folder()
+    # print("Copied files to github folder")
+    
     print("Completed")
