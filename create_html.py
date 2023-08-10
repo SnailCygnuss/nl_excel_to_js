@@ -4,6 +4,7 @@ import os
 import re
 import filecmp
 import shutil
+import subprocess
 
 def copy_files(file_params, cloud_path):
     """
@@ -161,5 +162,7 @@ if __name__ == "__main__":
 
     copy_files_git_folder(file_params)
     print("Copied files to git folder")
-    
+
+    # Call shell script to push ot github.
+    subprocess.call(["sh", "update_git.sh"])
     print("Completed")
