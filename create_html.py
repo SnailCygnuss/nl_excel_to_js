@@ -164,5 +164,5 @@ if __name__ == "__main__":
     print("Copied files to git folder")
 
     # Call shell script to push ot github.
-    subprocess.call(["sh", "update_git.sh"])
+    subprocess.call(["zsh", "update_git.sh"])
     print("Completed")
